@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+
+        function getdata()
+        {
+      
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function (){
+       
+                if (xhttp.readyState==4 && xhttp.status==200)
+                {
+                    var javaobj = geojson.parse(xhttp.response);
+                    document.getElementByID('div1').innerHTML = javaobj.id + " " + javaobj.coordinates;
+        
+				}
+			}
+                xhttp.opne("GET", "data.geojson", true);
+                xhttp.send();
+      
+		}
+
+    </script>
+
+</head>
+<body>
+    <input type="button" name="Available Hotels" onclick="getdata()" value="Click"/>
+    <div id="div1"></div>
+</body>
+</html>
