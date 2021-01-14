@@ -1,0 +1,260 @@
+{
+    "name": "brouter-web",
+    "version": "0.14.0",
+    "description": "Web client for BRouter",
+    "main": "js/index.js",
+    "scripts": {
+        "build": "gulp",
+        "transifex-push": "gulp i18next && tx push --source",
+        "transifex-pull": "tx pull --all --minimum-perc 1 --force && (git add locales/*.json && git commit locales/*.json -m 'Update translations' || true)",
+        "layers": "node layers/josm/extract.js && node layers/collection/extract.js",
+        "test": "gulp",
+        "lint": "eslint .",
+        "prettier": "prettier --write '**/*'",
+        "serve": "gulp serve watch",
+        "standalone": "mvn clean install -f ../brouter -pl '!brouter-routing-app' -Dmaven.javadoc.skip=true && ../brouter/misc/scripts/generate_profile_variants.sh && gulp release:zip_standalone"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --bail && yarn lint"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nrenner/brouter-web.git"
+    },
+    "license": "MIT",
+    "browserslist": [
+        "> 0.5%",
+        "last 2 versions",
+        "Firefox ESR",
+        "not dead",
+        "Explorer >= 10",
+        "Android >= 4.1",
+        "Safari >= 7",
+        "iOS >= 7"
+    ],
+    "dependencies": {
+        "@bagage/leaflet.restoreview": "1.0.1",
+        "@mapbox/polyline": "^0.2.0",
+        "@mapbox/togeojson": "^0.16.0",
+        "@turf/turf": "^5.1.6",
+        "Leaflet.vector-markers": "nrenner/Leaflet.vector-markers#2ef80c9",
+        "async": "~0.9.2",
+        "bootbox": "~5.3.4",
+        "bootstrap": "4.3.1",
+        "bootstrap-select": "1.13.6",
+        "bootstrap-slider": "^9.8.1",
+        "codemirror": "^5.35.0",
+        "datatables": "~1.10.18",
+        "font-awesome": "^4.7.0",
+        "geo-data-exchange": "alexcojocaru/geo-data-exchange#v1.1.0",
+        "i18next": "^19.8.4",
+        "i18next-browser-languagedetector": "^6.0.1",
+        "i18next-xhr-backend": "^3.2.2",
+        "jquery": "3.5.1",
+        "jquery-i18next": "^1.2.1",
+        "jstree": "^3.3.8",
+        "leaflet": "~1.6.0",
+        "leaflet-control-geocoder": "^1.13.0",
+        "leaflet-easybutton": "*",
+        "leaflet-editable": "^1.1.0",
+        "leaflet-filelayer": "^1.2.0",
+        "leaflet-geometryutil": "^0.9.1",
+        "leaflet-hotline": "^0.4.0",
+        "leaflet-plugins": "~3.0.0",
+        "leaflet-providers": "^1.10.2",
+        "leaflet-routing": "nrenner/leaflet-routing#e94e153",
+        "leaflet-sidebar-v2": "nrenner/leaflet-sidebar-v2#dev",
+        "leaflet-triangle-marker": "^1.0.2",
+        "leaflet.heightgraph": "nrenner/Leaflet.Heightgraph#0757b2a",
+        "leaflet.locatecontrol": "^0.60.0",
+        "leaflet.snogylop": "^0.4.0",
+        "leaflet.stravasegments": "2.3.2",
+        "mapbbcode": "MapBBCode/mapbbcode#v1.2.0",
+        "promise-polyfill": "^8.2.0",
+        "url-search-params": "~0.5.0",
+        "whatwg-fetch": "^3.5.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "^8.1.0",
+        "browser-sync": "^2.26.13",
+        "del": "^1.1.1",
+        "eslint": "^7.15.0",
+        "eslint-plugin-compat": "^3.3.0",
+        "gulp": "^4.0.2",
+        "gulp-bump": "^3.2.0",
+        "gulp-cached": "^1.0.4",
+        "gulp-clean-css": "^4.3.0",
+        "gulp-concat": "^2.5.2",
+        "gulp-confirm": "^1.0.6",
+        "gulp-debug": "^4.0.0",
+        "gulp-git": "^2.10.1",
+        "gulp-github-release": "^1.2.1",
+        "gulp-if": "^3.0.0",
+        "gulp-inject": "^5.0.5",
+        "gulp-json-concat": "^0.1.1",
+        "gulp-modify-css-urls": "^2.0.0",
+        "gulp-postcss": "^9.0.0",
+        "gulp-remember": "^1.0.1",
+        "gulp-rename": "^2.0.0",
+        "gulp-replace": "^1.0.0",
+        "gulp-sourcemaps": "^3.0.0",
+        "gulp-uglify": "^3.0.2",
+        "gulp-util": "^3.0.7",
+        "gulp-zip": "^5.0.2",
+        "husky": "^4.3.4",
+        "i18next-scanner": "^3.0.0",
+        "merge-stream": "^2.0.0",
+        "node-fetch": "^2.6.1",
+        "npmfiles": "^0.1.3",
+        "prettier": "^2.2.1",
+        "pretty-quick": "^3.1.0"
+    },
+    "overrides": {
+        "leaflet": {
+            "main": [
+                "dist/leaflet-src.js",
+                "dist/leaflet.css",
+                "dist/images/*.png"
+            ]
+        },
+        "leaflet-plugins": {
+            "main": [
+                "layer/tile/Bing.js"
+            ]
+        },
+        "leaflet-routing": {
+            "main": [
+                "src/utils/LineUtil.Snapping.js",
+                "src/utils/Marker.Snapping.js",
+                "src/L.Routing.js",
+                "src/L.Routing.Draw.js",
+                "src/L.Routing.Edit.js"
+            ]
+        },
+        "leaflet-sidebar-v2": {
+            "main": [
+                "js/leaflet-sidebar.js",
+                "css/leaflet-sidebar.css"
+            ]
+        },
+        "leaflet-easybutton": {
+            "main": [
+                "src/easy-button.js",
+                "src/easy-button.css"
+            ]
+        },
+        "bootstrap-select": {
+            "main": [
+                "js/bootstrap-select.js",
+                "dist/css/bootstrap-select.css"
+            ]
+        },
+        "datatables": {
+            "main": [
+                "media/**"
+            ]
+        },
+        "codemirror": {
+            "main": [
+                "lib/**"
+            ]
+        },
+        "bootbox": {
+            "main": [
+                "bootbox.all.js"
+            ]
+        },
+        "bootstrap": {
+            "main": [
+                "dist/js/bootstrap.js",
+                "dist/css/bootstrap.css"
+            ]
+        },
+        "leaflet.heightgraph": {
+            "main": [
+                "dist/L.Control.Heightgraph.js",
+                "src/L.Control.Heightgraph.css",
+                "dist/img/*.svg"
+            ]
+        },
+        "leaflet-control-geocoder": {
+            "main": [
+                "dist/Control.Geocoder.js",
+                "dist/Control.Geocoder.css",
+                "images/*.+(png|gif)"
+            ]
+        },
+        "url-search-params": {
+            "main": "build/url-search-params.js"
+        },
+        "leaflet.stravasegments": {
+            "main": "dist/index.js"
+        },
+        "font-awesome": {
+            "main": [
+                "css/font-awesome.css",
+                "fonts/*"
+            ]
+        },
+        "leaflet.locatecontrol": {
+            "main": [
+                "src/L.Control.Locate.js",
+                "dist/L.Control.Locate.css"
+            ]
+        },
+        "bootstrap-slider": {
+            "main": [
+                "dist/bootstrap-slider.js",
+                "dist/css/bootstrap-slider.css"
+            ],
+            "dependencies": {
+                "jquery": "*",
+                "bootstrap": "*"
+            }
+        },
+        "mapbbcode": {
+            "main": "src/controls/PermalinkAttribution.js"
+        },
+        "i18next": {
+            "main": [
+                "dist/umd/i18next.js"
+            ]
+        },
+        "i18next-xhr-backend": {
+            "main": [
+                "dist/umd/i18nextXHRBackend.js"
+            ]
+        },
+        "i18next-browser-languagedetector": {
+            "main": [
+                "dist/umd/i18nextBrowserLanguageDetector.js"
+            ]
+        },
+        "jquery-i18next": {
+            "main": [
+                "dist/umd/jquery-i18next.js"
+            ]
+        },
+        "jstree": {
+            "main": [
+                "dist/jstree.js",
+                "dist/themes/default/style.css",
+                "dist/themes/default/*.png"
+            ]
+        },
+        "promise-polyfill": {
+            "main": [
+                "dist/polyfill.js"
+            ]
+        },
+        "Leaflet.vector-markers": {
+            "main": [
+                "dist/leaflet-vector-markers.js",
+                "dist/leaflet-vector-markers.css"
+            ]
+        }
+    },
+    "proxy": "https://cors-anywhere.herokuapp.com/"
+}
